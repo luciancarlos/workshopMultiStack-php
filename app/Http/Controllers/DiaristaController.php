@@ -35,7 +35,9 @@ class DiaristaController extends Controller
 
     public function edit(int $id)
     {
-        
+        $diarista = Diarista::findOrfail($id);
+        //busca diarista no banco, se achar retorna a diarista, senão retorna um 404
+        return view('edit', ['diarista' => $diarista]);
     }
 }
  
