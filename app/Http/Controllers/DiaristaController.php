@@ -39,5 +39,31 @@ class DiaristaController extends Controller
         //busca diarista no banco, se achar retorna a diarista, senão retorna um 404
         return view('edit', ['diarista' => $diarista]);
     }
+
+    public function update(int $id, Request $request) //dados no banco de dados
+    {
+        $diarista = Diarista::findOrfail($id);
+
+        $dados = $request->except(['_token', '_method']);
+
+        //verificar se tem imagem
+        if($request->hasFile('foto_usuario')){
+            $dados['foto_usuario'] = $request->foto_usuario->store('public');
+        }
+
+        $diarista->update($dados); //atualiza a diarista
+
+        return redirect()->route('diaristas.index');
+
+    }
+
+    public function destroy(int $id)
+    {
+        $diarista = Diarista::findOrfail($id);
+
+        $diarista->delete();
+
+        return redirect()->route('diaristas.index');
+    }
 }
  
