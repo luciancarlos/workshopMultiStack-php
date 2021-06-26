@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 }); */
 
-Route::get('/diaristas-cidade',BuscaDiaristaCep::class );
+Route::get('/diaristas-cidade',BuscaDiaristaCep::class ); //ja executa direto a unica ação do controller
