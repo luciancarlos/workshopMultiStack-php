@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Diarista;
+use App\Services\ViaCEP;
 use Illuminate\Http\Request;
 
 class DiaristaController extends Controller
 {
+    //Definindo ViaCEP no construtor
+    public function __construct(
+        protected ViaCEP $viaCep
+    ){
+
+    }
+    
     public function index()
     {
         
@@ -27,6 +35,12 @@ class DiaristaController extends Controller
         /* nao recebe o valor do token  */
         $dados['foto_usuario']=$request->foto_usuario->store('public');
 
+        $dados['cpf'] = str_replace(['.','-'],'',$dados['cpf']);
+        $dados['cep'] = str_replace('-','',$dados['cep']);
+        $dados['telefone'] = str_replace(['(',')',' ','-'],'',$dados['telefone']);
+
+        $dados['codigo_ibge'] = $this->viaCep->buscar($dados['cep'])['ibge'];
+
         Diarista::create($dados); /* array com dados */
 
         return redirect()->route('diaristas.index'); /* volta para a lista de diaristas */
@@ -45,6 +59,12 @@ class DiaristaController extends Controller
         $diarista = Diarista::findOrfail($id);
 
         $dados = $request->except(['_token', '_method']);
+
+        $dados['cpf'] = str_replace(['.','-'],'',$dados['cpf']);
+        $dados['cep'] = str_replace('-','',$dados['cep']);
+        $dados['telefone'] = str_replace(['(',')',' ','-'],'',$dados['telefone']);
+        
+        $dados['codigo_ibge'] = $this->viaCep->buscar($dados['cep'])['ibge'];
 
         //verificar se tem imagem
         if($request->hasFile('foto_usuario')){
