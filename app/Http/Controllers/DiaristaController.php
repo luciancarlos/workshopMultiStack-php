@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DiaristaRequest;
 use App\Models\Diarista;
 use App\Services\ViaCEP;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class DiaristaController extends Controller
         return view('create');
     }
 
-    public function store(Request $request)
+    public function store(DiaristaRequest $request)
     {
         $dados = $request->except('_token');
         /* nao recebe o valor do token  */
@@ -54,7 +55,7 @@ class DiaristaController extends Controller
         return view('edit', ['diarista' => $diarista]);
     }
 
-    public function update(int $id, Request $request) //dados no banco de dados
+    public function update(int $id, DiaristaRequest $request) //dados no banco de dados
     {
         $diarista = Diarista::findOrfail($id);
 

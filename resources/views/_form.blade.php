@@ -13,7 +13,7 @@
     </div>
     <div class="mb-3">
         <label for="telefone" class="form-label">Telefone</label>
-        <input value="{{ @$diarista->telefone}}" type="text" class="form-control" id="telefone" name="telefone" required maxlength="15">
+        <input value="{{ @$diarista->telefone}}" type="text" class="form-control" id="telefone" name="telefone" required>
     </div>
     <div class="mb-3">
         <label for="logradouro" class="form-label">Logradouro</label>

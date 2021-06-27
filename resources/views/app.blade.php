@@ -32,6 +32,17 @@
     </header>
     
     <div class="container">
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
+
       @yield('conteudo')
     </div>
 
@@ -45,8 +56,8 @@
     <script>
       $(document).ready(function(){        
         $('#cep').mask('00000-000');        
-        $('#telefone').mask('(00) 0000-0000');        
-        $('#cpf').mask('000.000.000-00', {reverse: true});        
+        $('#telefone').mask('(00) 0000-00009');        
+        $('#cpf').mask('000.000.000-00', {reverse: true});         
       });            
     </script>
 
